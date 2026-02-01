@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <title>The Six Clown</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -14,134 +13,61 @@
 }
 
 *{box-sizing:border-box}
+body{margin:0;background:#000;color:#eaeaea;font-family:"JetBrains Mono",monospace;overflow-x:hidden;}
+canvas{position:fixed;inset:0;z-index:-1;}
 
-body{
-  margin:0;
-  background:#000;
-  color:#eaeaea;
-  font-family:"JetBrains Mono", monospace;
-  overflow-x:hidden;
-}
-
-/* CANVAS */
-canvas{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-}
-
-/* ACCESS SCREEN */
 #access{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  z-index:9999;
+  position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;
 }
-
 #access h1{
-  font-family:"Orbitron",sans-serif;
-  color:var(--neon);
-  letter-spacing:.3em;
-  text-shadow:0 0 25px rgba(0,255,156,.7);
+  font-family:"Orbitron",sans-serif;color:var(--neon);letter-spacing:.3em;text-shadow:0 0 30px rgba(0,255,156,.8);
 }
+#access span{color:#777;margin-top:1rem;}
 
-#access span{
-  margin-top:1rem;
-  color:#777;
+.wrapper{max-width:1100px;margin:auto;padding:6rem 1.5rem 8rem;text-align:center;}
+.hero{margin-bottom:5rem;}
+.hero h1{font-family:"Orbitron",sans-serif;color:var(--neon);font-size:2.5rem;letter-spacing:.2em;}
+.hero p{color:var(--blue);}
+.discord-btn{
+  margin-top:3rem;display:inline-block;padding:1rem 2.5rem;font-family:"Orbitron",sans-serif;letter-spacing:.15em;color:#000;background:var(--neon);
+  border-radius:50px;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 0 25px rgba(0,255,156,.6);animation:pulse 2.5s infinite;
 }
-
-/* MAIN */
-.wrapper{
-  max-width:1100px;
-  margin:auto;
-  padding:6rem 1.5rem;
+.discord-btn::before{
+  content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.6),transparent);transform:translateX(-100%);
 }
-
-.hero{
-  text-align:center;
-  margin-bottom:5rem;
-}
-.hero h1{
-  font-family:"Orbitron",sans-serif;
-  color:var(--neon);
-  font-size:3rem;
-  letter-spacing:.2em;
-}
-.hero p{
-  color:var(--blue);
-}
+.discord-btn:hover::before{animation:shine 1s;}
+.discord-btn:hover{box-shadow:0 0 45px rgba(0,255,156,.9);}
+@keyframes pulse{0%{box-shadow:0 0 15px rgba(0,255,156,.4)}50%{box-shadow:0 0 35px rgba(0,255,156,.9)}100%{box-shadow:0 0 15px rgba(0,255,156,.4)}}
+@keyframes shine{to{transform:translateX(100%)}}
 
 /* PANELS */
-.panel{
-  background:rgba(10,10,10,.75);
-  border:1px solid rgba(0,255,156,.15);
-  border-radius:14px;
-  padding:2rem;
-  margin-bottom:2.5rem;
-  opacity:0;
-  transform:translateY(40px);
-  transition:.8s ease;
-  backdrop-filter:blur(6px);
-}
-.panel.show{
-  opacity:1;
-  transform:none;
-}
-
-.panel h2{
-  font-family:"Orbitron",sans-serif;
-  color:var(--neon);
-  margin-top:0;
-}
-
-.footer{
-  text-align:center;
-  color:#777;
-  margin-top:5rem;
-}
+.panel{margin-top:4rem;padding:2rem;border:1px solid rgba(0,255,156,.15);border-radius:14px;background:rgba(10,10,10,.7);backdrop-filter:blur(6px);opacity:0;transform:translateY(40px);transition:.8s ease;}
+.panel.show{opacity:1;transform:none;}
+.panel h2{font-family:"Orbitron",sans-serif;color:var(--neon);}
+.footer{margin-top:6rem;color:#777;font-size:.9rem;}
 </style>
 </head>
 
 <body>
 
-<!-- ACCESS -->
 <div id="access">
   <h1>ACCESS GRANTED</h1>
   <span>SYSTEM AUTHORIZED</span>
 </div>
 
-<!-- CONTENT -->
 <div class="wrapper">
 
   <section class="hero">
     <h1>🧬 THE SIX CLOWN 🧬</h1>
     <p>🇪🇸 Spain • Elite Cyber Community</p>
     <p>SYSTEM ONLINE</p>
+
+    <a class="discord-btn" href="https://discord.gg/bF7c5WeM5" target="_blank">JOIN DISCORD</a>
   </section>
 
-  <section class="panel"><h2>NÚCLEO DIGITAL</h2>
-    <p>Comunidad privada formada por mentes técnicas que entienden el código como poder.</p>
-  </section>
-
-  <section class="panel"><h2>ENGINEERING</h2>
-    <p>Tools propias, bots avanzados y automatización enfocada a análisis técnico y OSINT.</p>
-  </section>
-
-  <section class="panel"><h2>MENTALIDAD</h2>
-    <p>Disciplina. Criterio. Evolución constante. Sin ruido.</p>
-  </section>
-
-  <section class="panel"><h2>UTILIDADES</h2>
-    <p>Bot de lookup para FiveM con precisión quirúrgica.</p>
-  </section>
-
-  <section class="panel"><h2>IDENTIDAD</h2>
-    <p>No somos un Discord más. Somos una élite digital.</p>
-  </section>
+  <section class="panel"><h2>NÚCLEO DIGITAL</h2><p>Comunidad privada de mentes técnicas. Código como poder. Conocimiento como ventaja.</p></section>
+  <section class="panel"><h2>ENGINEERING</h2><p>Tools propias, bots avanzados y automatización quirúrgica.</p></section>
+  <section class="panel"><h2>IDENTIDAD</h2><p>No somos un Discord más. Somos una élite digital.</p></section>
 
   <footer class="footer">
     <strong>The Six Clown</strong> — Think deeper. Code smarter.<br>🎭💀🚀
@@ -149,14 +75,13 @@ canvas{
 
 </div>
 
-<!-- THREE.JS -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/loaders/FontLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/geometries/TextGeometry.js"></script>
 
 <script>
 // REMOVE ACCESS SCREEN
-setTimeout(()=>{
-  document.getElementById("access").remove();
-},2500);
+setTimeout(()=>document.getElementById("access").remove(),2500);
 
 // SCROLL REVEAL
 const panels=document.querySelectorAll(".panel");
@@ -170,44 +95,68 @@ const reveal=()=>{
 window.addEventListener("scroll",reveal);
 reveal();
 
-// THREE.JS PARTICLES
+// THREE.JS SCENE
 const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
-const renderer=new THREE.WebGLRenderer({alpha:true});
-renderer.setSize(window.innerWidth,window.innerHeight);
+const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
+camera.position.z=30;
+const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(innerWidth,innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const geometry=new THREE.BufferGeometry();
-const count=2000;
-const positions=new Float32Array(count*3);
-
-for(let i=0;i<count*3;i++){
-  positions[i]=(Math.random()-0.5)*50;
-}
-geometry.setAttribute("position",new THREE.BufferAttribute(positions,3));
-
-const material=new THREE.PointsMaterial({
-  color:0x00ff9c,
-  size:0.05
-});
-
-const particles=new THREE.Points(geometry,material);
+// PARTICLES
+const geo=new THREE.BufferGeometry();
+const count=2200;
+const pos=new Float32Array(count*3);
+for(let i=0;i<count*3;i++) pos[i]=(Math.random()-0.5)*60;
+geo.setAttribute("position",new THREE.BufferAttribute(pos,3));
+const mat=new THREE.PointsMaterial({color:0x00ff9c,size:0.05});
+const particles=new THREE.Points(geo,mat);
 scene.add(particles);
 
-camera.position.z=20;
+// LOGO 3D TEXT
+const loader=new THREE.FontLoader();
+loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font){
+  const textGeo=new THREE.TextGeometry('THE SIX CLOWN',{
+    font:font,
+    size:4,
+    height:0.8,
+    curveSegments:12,
+    bevelEnabled:true,
+    bevelThickness:0.05,
+    bevelSize:0.05,
+    bevelSegments:3
+  });
+  const textMat=new THREE.MeshStandardMaterial({color:0x00ff9c,metalness:.8,roughness:.2});
+  const textMesh=new THREE.Mesh(textGeo,textMat);
+  textGeo.center();
+  scene.add(textMesh);
 
+  function animateText(){
+    requestAnimationFrame(animateText);
+    textMesh.rotation.y+=0.003;
+    particles.rotation.y+=0.0006;
+    renderer.render(scene,camera);
+  }
+  animateText();
+});
+
+// LIGHT
+const light=new THREE.PointLight(0x00ff9c,1.5);
+light.position.set(20,20,20);
+scene.add(light);
+
+// RENDER PARTICLES WHEN TEXT NOT LOADED
 function animate(){
   requestAnimationFrame(animate);
-  particles.rotation.y+=0.0008;
-  particles.rotation.x+=0.0004;
+  particles.rotation.y+=0.0006;
   renderer.render(scene,camera);
 }
 animate();
 
 window.addEventListener("resize",()=>{
-  camera.aspect=window.innerWidth/window.innerHeight;
+  camera.aspect=innerWidth/innerHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth,window.innerHeight);
+  renderer.setSize(innerWidth,innerHeight);
 });
 </script>
 
