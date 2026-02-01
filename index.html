@@ -11,18 +11,23 @@
 :root{
   --neon:#00ff9c;
   --blue:#4da6ff;
-  --bg:#020202;
-  --panel:#0c0c0c;
 }
 
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  background:radial-gradient(circle at top,#0a0a0a,#010101 70%);
+  background:#000;
   color:#eaeaea;
   font-family:"JetBrains Mono", monospace;
   overflow-x:hidden;
+}
+
+/* CANVAS */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:-1;
 }
 
 /* ACCESS SCREEN */
@@ -35,88 +40,53 @@ body{
   justify-content:center;
   flex-direction:column;
   z-index:9999;
-  animation:fadeOut 1.5s ease forwards;
-  animation-delay:3.5s;
 }
 
 #access h1{
   font-family:"Orbitron",sans-serif;
   color:var(--neon);
   letter-spacing:.3em;
-  text-shadow:0 0 20px rgba(0,255,156,.6);
-  animation:glitch 1.5s infinite;
+  text-shadow:0 0 25px rgba(0,255,156,.7);
 }
 
 #access span{
   margin-top:1rem;
-  color:#888;
+  color:#777;
 }
 
-@keyframes fadeOut{
-  to{opacity:0;visibility:hidden}
-}
-
-/* GLITCH */
-@keyframes glitch{
-  0%{text-shadow:2px 0 red,-2px 0 cyan}
-  50%{text-shadow:-2px 0 red,2px 0 cyan}
-  100%{text-shadow:2px 0 red,-2px 0 cyan}
-}
-
-/* GRID */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(0,255,156,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,255,156,.03) 1px,transparent 1px);
-  background-size:40px 40px;
-  pointer-events:none;
-}
-
-/* WRAPPER */
+/* MAIN */
 .wrapper{
   max-width:1100px;
   margin:auto;
   padding:6rem 1.5rem;
 }
 
-/* HERO */
 .hero{
   text-align:center;
   margin-bottom:5rem;
-  animation:rise 1.5s ease;
 }
-@keyframes rise{
-  from{opacity:0;transform:translateY(30px)}
-  to{opacity:1;transform:none}
-}
-
 .hero h1{
   font-family:"Orbitron",sans-serif;
   color:var(--neon);
   font-size:3rem;
   letter-spacing:.2em;
 }
-
 .hero p{
   color:var(--blue);
-  margin-top:.5rem;
 }
 
 /* PANELS */
 .panel{
-  background:linear-gradient(180deg,#0e0e0e,#050505);
-  border:1px solid #1b1b1b;
+  background:rgba(10,10,10,.75);
+  border:1px solid rgba(0,255,156,.15);
   border-radius:14px;
   padding:2rem;
   margin-bottom:2.5rem;
   opacity:0;
   transform:translateY(40px);
   transition:.8s ease;
+  backdrop-filter:blur(6px);
 }
-
 .panel.show{
   opacity:1;
   transform:none;
@@ -128,54 +98,118 @@ body::before{
   margin-top:0;
 }
 
-.panel p{
-  line-height:1.7;
-}
-
-/* FOOTER */
 .footer{
   text-align:center;
   color:#777;
   margin-top:5rem;
-  font-size:.9rem;
-}
-
-/* SCANLINE */
-.scan{
-  position:fixed;
-  top:-50%;
-  width:100%;
-  height:200%;
-  background:linear-gradient(
-    transparent,
-    rgba(0,255,156,.08),
-    transparent
-  );
-  animation:scan 7s linear infinite;
-  pointer-events:none;
-}
-@keyframes scan{
-  to{transform:translateY(50%)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- ACCESS GRANTED -->
+<!-- ACCESS -->
 <div id="access">
   <h1>ACCESS GRANTED</h1>
   <span>SYSTEM AUTHORIZED</span>
 </div>
 
-<div class="scan"></div>
-
+<!-- CONTENT -->
 <div class="wrapper">
 
   <section class="hero">
     <h1>🧬 THE SIX CLOWN 🧬</h1>
     <p>🇪🇸 Spain • Elite Cyber Community</p>
-    <p>SYSTEM ONLINE // ACCESS GRANTED</p>
+    <p>SYSTEM ONLINE</p>
   </section>
 
-  <section class="panel">
+  <section class="panel"><h2>NÚCLEO DIGITAL</h2>
+    <p>Comunidad privada formada por mentes técnicas que entienden el código como poder.</p>
+  </section>
+
+  <section class="panel"><h2>ENGINEERING</h2>
+    <p>Tools propias, bots avanzados y automatización enfocada a análisis técnico y OSINT.</p>
+  </section>
+
+  <section class="panel"><h2>MENTALIDAD</h2>
+    <p>Disciplina. Criterio. Evolución constante. Sin ruido.</p>
+  </section>
+
+  <section class="panel"><h2>UTILIDADES</h2>
+    <p>Bot de lookup para FiveM con precisión quirúrgica.</p>
+  </section>
+
+  <section class="panel"><h2>IDENTIDAD</h2>
+    <p>No somos un Discord más. Somos una élite digital.</p>
+  </section>
+
+  <footer class="footer">
+    <strong>The Six Clown</strong> — Think deeper. Code smarter.<br>🎭💀🚀
+  </footer>
+
+</div>
+
+<!-- THREE.JS -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
+
+<script>
+// REMOVE ACCESS SCREEN
+setTimeout(()=>{
+  document.getElementById("access").remove();
+},2500);
+
+// SCROLL REVEAL
+const panels=document.querySelectorAll(".panel");
+const reveal=()=>{
+  panels.forEach(p=>{
+    if(p.getBoundingClientRect().top < window.innerHeight-100){
+      p.classList.add("show");
+    }
+  });
+};
+window.addEventListener("scroll",reveal);
+reveal();
+
+// THREE.JS PARTICLES
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+const renderer=new THREE.WebGLRenderer({alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const geometry=new THREE.BufferGeometry();
+const count=2000;
+const positions=new Float32Array(count*3);
+
+for(let i=0;i<count*3;i++){
+  positions[i]=(Math.random()-0.5)*50;
+}
+geometry.setAttribute("position",new THREE.BufferAttribute(positions,3));
+
+const material=new THREE.PointsMaterial({
+  color:0x00ff9c,
+  size:0.05
+});
+
+const particles=new THREE.Points(geometry,material);
+scene.add(particles);
+
+camera.position.z=20;
+
+function animate(){
+  requestAnimationFrame(animate);
+  particles.rotation.y+=0.0008;
+  particles.rotation.x+=0.0004;
+  renderer.render(scene,camera);
+}
+animate();
+
+window.addEventListener("resize",()=>{
+  camera.aspect=window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth,window.innerHeight);
+});
+</script>
+
+</body>
+</html>
