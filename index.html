@@ -1,236 +1,181 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>The Six Clown</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --neon:#00ff9c;
   --blue:#4da6ff;
-  --bg:#060606;
-  --panel:#0e0e0e;
-  --muted:#8a8a8a;
+  --bg:#020202;
+  --panel:#0c0c0c;
 }
 
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  background:radial-gradient(circle at top, #0b0b0b, #020202 60%);
+  background:radial-gradient(circle at top,#0a0a0a,#010101 70%);
   color:#eaeaea;
   font-family:"JetBrains Mono", monospace;
   overflow-x:hidden;
 }
 
-/* Background grid */
+/* ACCESS SCREEN */
+#access{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:9999;
+  animation:fadeOut 1.5s ease forwards;
+  animation-delay:3.5s;
+}
+
+#access h1{
+  font-family:"Orbitron",sans-serif;
+  color:var(--neon);
+  letter-spacing:.3em;
+  text-shadow:0 0 20px rgba(0,255,156,.6);
+  animation:glitch 1.5s infinite;
+}
+
+#access span{
+  margin-top:1rem;
+  color:#888;
+}
+
+@keyframes fadeOut{
+  to{opacity:0;visibility:hidden}
+}
+
+/* GLITCH */
+@keyframes glitch{
+  0%{text-shadow:2px 0 red,-2px 0 cyan}
+  50%{text-shadow:-2px 0 red,2px 0 cyan}
+  100%{text-shadow:2px 0 red,-2px 0 cyan}
+}
+
+/* GRID */
 body::before{
   content:"";
   position:fixed;
   inset:0;
   background:
-    linear-gradient(rgba(0,255,156,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,156,.03) 1px, transparent 1px);
+    linear-gradient(rgba(0,255,156,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,156,.03) 1px,transparent 1px);
   background-size:40px 40px;
   pointer-events:none;
 }
 
-/* Container */
+/* WRAPPER */
 .wrapper{
   max-width:1100px;
   margin:auto;
-  padding:4rem 1.5rem 6rem;
+  padding:6rem 1.5rem;
 }
 
-/* Header */
-.header{
+/* HERO */
+.hero{
   text-align:center;
-  margin-bottom:4rem;
+  margin-bottom:5rem;
+  animation:rise 1.5s ease;
 }
-.header h1{
-  font-family:"Orbitron", sans-serif;
-  font-size:3rem;
-  letter-spacing:.15em;
+@keyframes rise{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:none}
+}
+
+.hero h1{
+  font-family:"Orbitron",sans-serif;
   color:var(--neon);
-  text-shadow:0 0 20px rgba(0,255,156,.35);
+  font-size:3rem;
+  letter-spacing:.2em;
 }
-.header .tagline{
+
+.hero p{
   color:var(--blue);
   margin-top:.5rem;
 }
-.status{
-  margin-top:1.2rem;
-  color:var(--muted);
-  font-size:.9rem;
-}
-.status span{
-  color:var(--neon);
-}
 
-/* Panels */
+/* PANELS */
 .panel{
-  background:linear-gradient(180deg, #0d0d0d, #070707);
+  background:linear-gradient(180deg,#0e0e0e,#050505);
   border:1px solid #1b1b1b;
   border-radius:14px;
   padding:2rem;
-  margin-bottom:2rem;
-  box-shadow:
-    0 0 0 1px rgba(0,255,156,.05),
-    0 25px 80px rgba(0,0,0,.8);
-  position:relative;
+  margin-bottom:2.5rem;
+  opacity:0;
+  transform:translateY(40px);
+  transition:.8s ease;
 }
-.panel::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:14px;
-  box-shadow:inset 0 0 40px rgba(0,255,156,.04);
-  pointer-events:none;
+
+.panel.show{
+  opacity:1;
+  transform:none;
 }
 
 .panel h2{
-  font-family:"Orbitron", sans-serif;
+  font-family:"Orbitron",sans-serif;
   color:var(--neon);
   margin-top:0;
-  letter-spacing:.08em;
 }
 
 .panel p{
   line-height:1.7;
-  color:#d6d6d6;
 }
 
-/* Highlight */
-.highlight{
-  color:var(--neon);
-}
-
-/* Footer */
+/* FOOTER */
 .footer{
   text-align:center;
+  color:#777;
   margin-top:5rem;
-  color:var(--muted);
-  font-size:.85rem;
+  font-size:.9rem;
 }
 
-/* Glitch effect */
-.glitch{
-  position:relative;
-  display:inline-block;
-}
-.glitch::before,
-.glitch::after{
-  content:attr(data-text);
-  position:absolute;
-  left:0;
-  top:0;
-  opacity:.8;
-}
-.glitch::before{
-  color:#ff0055;
-  transform:translate(2px,0);
-  clip-path:polygon(0 0,100% 0,100% 45%,0 45%);
-}
-.glitch::after{
-  color:#00eaff;
-  transform:translate(-2px,0);
-  clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%);
-}
-
-/* Scanline */
-.scanline{
+/* SCANLINE */
+.scan{
   position:fixed;
   top:-50%;
-  left:0;
   width:100%;
   height:200%;
   background:linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0,255,156,.06) 50%,
-    transparent 100%
+    transparent,
+    rgba(0,255,156,.08),
+    transparent
   );
-  animation:scan 8s linear infinite;
+  animation:scan 7s linear infinite;
   pointer-events:none;
 }
 @keyframes scan{
-  0%{transform:translateY(-50%)}
-  100%{transform:translateY(50%)}
+  to{transform:translateY(50%)}
 }
 </style>
 </head>
 
 <body>
-<div class="scanline"></div>
+
+<!-- ACCESS GRANTED -->
+<div id="access">
+  <h1>ACCESS GRANTED</h1>
+  <span>SYSTEM AUTHORIZED</span>
+</div>
+
+<div class="scan"></div>
 
 <div class="wrapper">
 
-  <header class="header">
-    <h1 class="glitch" data-text="🧬 THE SIX CLOWN 🧬">🧬 THE SIX CLOWN 🧬</h1>
-    <div class="tagline">🇪🇸 Spain • Elite Cyber Community</div>
-    <div class="status">SYSTEM ONLINE // <span>ACCESS GRANTED</span></div>
-  </header>
-
-  <section class="panel">
-    <p>
-      En el núcleo digital de España surge <span class="highlight">The Six Clown</span>, una comunidad privada de Discord
-      formada por mentes técnicas, programadores y arquitectos digitales que entienden el
-      código como poder y el conocimiento como ventaja. 🕶️⚙️
-    </p>
+  <section class="hero">
+    <h1>🧬 THE SIX CLOWN 🧬</h1>
+    <p>🇪🇸 Spain • Elite Cyber Community</p>
+    <p>SYSTEM ONLINE // ACCESS GRANTED</p>
   </section>
 
   <section class="panel">
-    <p>
-      💻 Dominamos la programación y desarrollamos <span class="highlight">tools propias</span>,
-      bots avanzados y sistemas de automatización enfocados al análisis técnico,
-      la inteligencia digital basada en información pública y la optimización de procesos.
-      Nada innecesario. Nada amateur. Solo eficiencia.
-    </p>
-  </section>
-
-  <section class="panel">
-    <p>
-      🧠 Aquí el aprendizaje es real. Enseñamos, guiamos y perfeccionamos habilidades técnicas
-      con una mentalidad clara: disciplina, criterio y evolución constante.
-      Desde fundamentos sólidos hasta conceptos avanzados, la comunidad se fortalece
-      compartiendo conocimiento sin ruido.
-    </p>
-  </section>
-
-  <section class="panel">
-    <p>
-      🤖 Contamos con utilidades exclusivas, como nuestro bot de lookup para FiveM,
-      diseñado para desarrolladores y administradores que requieren información clara,
-      rápida y estructurada. Precisión quirúrgica en cada consulta.
-    </p>
-  </section>
-
-  <section class="panel">
-    <p>
-      🔐 En The Six Clown defendemos el uso ético de la tecnología,
-      el control responsable de los datos públicos y una visión profesional
-      del entorno digital. No improvisamos. No exponemos.
-      Analizamos, construimos y avanzamos.
-    </p>
-  </section>
-
-  <section class="panel">
-    <p>
-      🌐 No somos un Discord más.<br><br>
-      Somos una élite digital, una red cerrada que crea herramientas,
-      transmite conocimiento y evoluciona en las sombras del sistema.
-    </p>
-  </section>
-
-  <footer class="footer">
-    <div><strong>The Six Clown</strong> — Think deeper. Code smarter.</div>
-    <div>🎭💀🚀</div>
-  </footer>
-
-</div>
-</body>
-</html>
